@@ -1,0 +1,31 @@
+dist: trusty
+
+language: go
+
+go:
+- 1.12.x
+
+env:
+  global:
+  - GO111MODULE=on
+
+install:
+- go mod download
+
+script:
+- go test ./...
+
+notifications:
+  webhooks:
+  - https://idobata.io/hook/travis_ci/4163b04e-3941-45a2-bdeb-ad7a5ea8eddd
+
+deploy:
+  provider: script
+  api_key:
+    secure: oYJxDVc5/Ym38RBIyinuC2LLm7aRzdwaYE0Ip0BE506+KeLYfuj+et+ImMDfXCP0l6tGtT5xfbNrC1LNEKqeOl9t5isLb0N9fDbjU+x0/jpgecrUrUwPTtqqP2WJBX5NcirdklOwA+WNIoR1Jj22kkAmfof2zgLgD26t8Ua87TEcV6WtSjVyXx8sPdgAmMgl2H19A5zjXUXPfc6RBYCZ2L5fqjMw2uXhXRXAjLSOWH60IuwzFEpTC7vXwX6Ou3/StdQoFFYeRLIydPdV0AM6seyj/nDECinHjTNDbkMaHLWEKS6Fmea85PZYQvVyNmQqmbtRjRntWP99JcyqY8AeDEjmV7PowBTVM/Ybujbhi0sEQn5KvAxyxEwct54PoI0JRjvPcYgubbnSL62HgiYRehwk3GxS9hihVOgJ9nGGd7tr35grOWLu4MOGSRMVxZmsJ8NrXysF3/KkRqM2vLvNvNYzzHfEGl5FrIzyNLIm/VxtndoLVP7baJ0DENd0+eqhwI32EBSgz3KBjDPSj39HoD3c66U7q8VMc0k+g65rA8WQKJK9VdigSqFK+FZ0jEotZKk5An/FdpBSIiikNhfg1BMpuWj03S/CU4xGfiFewPp1ss5Ok6FI8pcC75GhkQipLYN6PpgenR7Iu0SSCB+E7BlX7KJqETTxoz7kmIPkKsY=
+  skip_cleanup: true
+  script: curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
+    repo: VulnerabilityAlertService/vas

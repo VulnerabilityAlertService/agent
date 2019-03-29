@@ -1,0 +1,49 @@
+project_name: vas
+release:
+  github:
+    owner: VulnerabilityAlertService
+    name: vas
+
+builds:
+  -
+    env:
+      - GO111MODULE=on
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - "386"
+      - arm
+      - arm64
+    goarm:
+      - "6"
+    main: ./
+    binary: vas
+
+archive:
+  format: tar.gz
+  name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  replacements:
+    amd64: 64bit
+    386: 32bit
+    arm: ARM
+    arm64: ARM64
+    linux: Linux
+  files:
+  - LICENSE*
+  - README*
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - docs
+      - typo
+      - Merge pull request
+      - Merge branch
+
+snapshot:
+  name_template: SNAPSHOT-{{ .Commit }}
+
+checksum:
+  name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
